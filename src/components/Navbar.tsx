@@ -24,10 +24,10 @@ const Navbar: React.FC<Props> = () => {
 
 const Wrapper = styled.nav`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 
-  padding: 3rem 5rem;
+  padding: 3rem 0rem;
 `;
 
 const Logo = styled.h1`
