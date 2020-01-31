@@ -65,7 +65,7 @@ const AuthBox = styled.div`
   }
 `;
 
-const AuthLogIn = styled.span`
+const AuthLogIn = styled.p`
   font-weight: 600;
   font-size: 1.5rem;
 

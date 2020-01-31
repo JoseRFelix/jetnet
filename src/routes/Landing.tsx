@@ -110,9 +110,10 @@ const Wrapper = styled.main`
 
 const Hero = styled.header`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
 
-  padding: 10rem 5rem 0 5rem;
+  padding: 8rem 5rem 0 5rem;
 `;
 
 const HeroLeft = styled.div`
@@ -145,7 +146,7 @@ const HeroSubHeader = styled.h1`
 `;
 
 const HeroIllustration = styled(SocialFeedSVG)`
-  width: 70rem;
+  width: 50rem;
   margin-top: -10rem;
 `;
 
@@ -225,7 +226,6 @@ const FeatureIllustration = styled(ServerWomanSVG)`
 
 const CallToAction = styled.section`
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
 
   padding-top: 10rem;
@@ -259,7 +259,7 @@ const DrawingMan = styled(DrawingManSVG)`
 `;
 
 const CallToActionBox = styled.div`
-  flex: 0 0 50%;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -347,9 +347,12 @@ const FooterColumnHeader = styled.h2`
 `;
 
 const FooterColumnItem = styled.p`
-  font-weight: 400;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.6);
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.8);
+  }
 `;
 
 export default Landing;
