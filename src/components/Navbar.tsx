@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "components";
 
+const LogInModal = React.lazy(() => import("components/modals/SignIn"));
+
 interface Props {}
 
 const Navbar: React.FC<Props> = () => {
