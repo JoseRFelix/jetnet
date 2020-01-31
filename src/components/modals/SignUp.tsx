@@ -3,10 +3,10 @@ import { Modal } from ".";
 
 interface Props {}
 
-export const SignIn: React.FC<Props> = () => {
+export const SignUp: React.FC<Props> = () => {
   return (
     <Modal>
-      <h1>Welcome Back!</h1>
+      <h1>Hello, Friend!</h1>
     </Modal>
   );
 };

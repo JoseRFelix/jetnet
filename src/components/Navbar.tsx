@@ -1,12 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "components";
-
-const LogInModal = React.lazy(() => import("components/modals/SignIn"));
+import { useDispatch } from "react-redux";
+import { showModal } from "slices/modal";
+import { modalTypes } from "../constants";
 
 interface Props {}
 
 const Navbar: React.FC<Props> = () => {
+  const dispatch = useDispatch();
+
+  const openSignIn = () => {
+    dispatch(showModal({ modalType: modalTypes.signIn, modalProps: {} }));
+  };
+
+  const openSignUp = () => {
+    dispatch(showModal({ modalType: modalTypes.signUp, modalProps: {} }));
+  };
+
   return (
     <Wrapper>
       <Logo>Jetnet</Logo>
@@ -17,8 +28,8 @@ const Navbar: React.FC<Props> = () => {
         <Link>Resources</Link>
       </LinksBox>
       <AuthBox>
-        <AuthLogIn>Log In</AuthLogIn>
-        <Button>Sign Up</Button>
+        <AuthLogIn onClick={openSignIn}>Log In</AuthLogIn>
+        <Button onClick={openSignUp}>Sign Up</Button>
       </AuthBox>
     </Wrapper>
   );
