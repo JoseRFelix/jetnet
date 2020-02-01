@@ -1,0 +1,25 @@
+version: '2.4'
+
+services:
+  node:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: dev
+    volumes:
+      - .:/app:delegated
+      - /app/node_modules/
+    ports:
+      - '3001:3001'
+    depends_on:
+      - database
+
+  database:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'

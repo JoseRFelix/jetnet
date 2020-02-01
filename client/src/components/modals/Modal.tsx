@@ -36,7 +36,7 @@ const StyledModal = styled(ReactModal)`
   padding: 2rem 5rem;
 
   background-color: white;
-  border-radius: 5px;
+  border-radius: 8px;
 
   &:focus {
     outline: none;
