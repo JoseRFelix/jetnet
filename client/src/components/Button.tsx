@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { lighten } from "polished";
 
-interface Props {
+interface Props extends React.ComponentPropsWithoutRef<"button"> {
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }

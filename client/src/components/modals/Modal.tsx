@@ -13,6 +13,7 @@ export const Modal: React.FC<Props> = ({ children }) => {
 
   return (
     <StyledModal
+      bodyOpenClassName={null}
       style={{
         overlay: {
           backgroundColor: "rgba(0, 0, 0, 0.3)",
