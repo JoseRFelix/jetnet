@@ -5,8 +5,8 @@
   "scripts": {
     "build": "tsc",
     "heroku-postbuild": "npm run build",
-    "start": "nodemon",
-    "inspect": "nodemon --inspect src/app.ts",
+    "start": "nodemon -L",
+    "inspect": "nodemon -L --inspect src/app.ts",
     "test": "jest",
     "lint": "npm run lint:js ",
     "lint:eslint": "eslint --ignore-path .gitignore --ext .ts",

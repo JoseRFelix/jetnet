@@ -4,7 +4,6 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { defaultTheme, breakpoints } from "theme";
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "routes";
-import ModalManager from "components/modals/ModalManager";
 
 const App: React.FC = () => {
   return (
@@ -13,7 +12,6 @@ const App: React.FC = () => {
         <GlobalStyle />
         <FontImports />
         <Router />
-        <ModalManager />
       </BrowserRouter>
     </ThemeProvider>
   );

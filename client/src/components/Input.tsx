@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-interface Props extends React.HTMLAttributes<HTMLInputElement> {}
+interface Props extends React.ComponentPropsWithRef<"input"> {}
 
 const Input = React.forwardRef<HTMLInputElement, Props>(({ ...props }, ref) => {
   return <StyledInput ref={ref} {...props} />;
@@ -22,6 +22,8 @@ const StyledInput = styled.input`
   &::placeholder {
     font-family: Poppins, sand-serif;
     font-size: 1.4rem;
+
+    color: rgba(0, 0, 0, 0.4);
   }
 `;
 

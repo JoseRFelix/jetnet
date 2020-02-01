@@ -11,8 +11,8 @@ export const SignIn: React.FC<Props> = () => {
     <Modal>
       <Wrapper>
         <Title>Welcome Back!</Title>
-        <Input placeholder="Email" />
-        <Input placeholder="Password" />
+        <Input name="signin-email" placeholder="Email" />
+        <Input name="signin-password" placeholder="Password" />
         <StyledButton>Log In</StyledButton>
       </Wrapper>
     </Modal>

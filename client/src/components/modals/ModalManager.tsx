@@ -23,4 +23,8 @@ const ModalManager: React.FC<Props> = ({ modalType, modalProps }) => {
   return <SpecificModal {...modalProps} />;
 };
 
-export default connect((state: RootState) => state.modal)(ModalManager);
+const WrappedModalManager = connect((state: RootState) => state.modal)(
+  ModalManager
+);
+
+export default WrappedModalManager;

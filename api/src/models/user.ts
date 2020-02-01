@@ -16,6 +16,25 @@ const User = new mongoose.Schema(
       index: true,
     },
 
+    dateOfBirth: {
+      type: Date,
+      required: true,
+    },
+
+    phone: {
+      type: String,
+      required: true,
+    },
+
+    address: {
+      city: { type: String, required: true },
+      street: { type: String, required: true },
+      number: { type: String, required: true },
+      zip: { type: String, required: true },
+    },
+
+    picture: String,
+
     password: String,
 
     salt: String,
