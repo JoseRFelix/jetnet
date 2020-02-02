@@ -1,5 +1,4 @@
 import React from "react";
-import FontImports from "assets/fonts/fontImports";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { defaultTheme, breakpoints } from "theme";
 import { BrowserRouter } from "react-router-dom";
@@ -10,7 +9,6 @@ const App: React.FC = () => {
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
         <GlobalStyle />
-        <FontImports />
         <Router />
       </BrowserRouter>
     </ThemeProvider>
@@ -28,18 +26,16 @@ const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: 62.5%; /*1 rem = 10px */
+    font-family: "Poppins", sans-serif;
 
     @media only screen and (max-width: ${breakpoints.bpLarge}) {
-        font-size: 50%;
-      }
-    
+      font-size: 50%;
+    }    
   }
 
   body {
     font-size: 1.4rem; 
-    min-height: 100vh;
-    
-    font-family: "Poppins", sans-serif;
+    min-height: 100vh;    
   }
 
   a {

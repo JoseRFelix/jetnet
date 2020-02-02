@@ -7,7 +7,7 @@ import { ReactComponent as CameraSVG } from "assets/svg/camera.svg";
 function getBase64(img: any): Promise<string | ArrayBuffer | null> {
   const reader = new FileReader();
 
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     reader.onload = () => {
       resolve(reader.result);
     };
@@ -42,7 +42,12 @@ const UploadPicture: React.FC<Props> = ({ setUserImage, className }) => {
     e.preventDefault();
 
     if (e.dataTransfer.files) {
-      const imageURL = await getBase64(e.dataTransfer.files[0] as File);
+      const file = e.dataTransfer.files[0] as File;
+      const isLessThan2MB = file.size / 1024 / 1024 < 2;
+
+      if (!isLessThan2MB) return alert("Image must smaller than 2MB!");
+
+      const imageURL = await getBase64(file);
       setUserImage(imageURL);
     }
 
@@ -50,8 +55,15 @@ const UploadPicture: React.FC<Props> = ({ setUserImage, className }) => {
   };
 
   const uploadImage = async (e: any) => {
-    const imageURL = await getBase64(e.target.files[0] as File);
-    setUserImage(imageURL as string);
+    if (e.target.files) {
+      const file = e.target.files[0] as File;
+      const isLessThan2MB = file.size / 1024 / 1024 < 2;
+
+      if (!isLessThan2MB) return alert("Image must smaller than 2MB!");
+
+      const imageURL = await getBase64(file);
+      setUserImage(imageURL);
+    }
   };
 
   return (
@@ -92,8 +104,8 @@ const Dropzone = styled.div<{ highlight: Boolean }>`
 
   cursor: pointer;
 
-  height: 15rem;
-  width: 15rem;
+  height: 14rem;
+  width: 14rem;
 
   background-color: #fff;
 

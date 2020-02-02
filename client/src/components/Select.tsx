@@ -14,7 +14,10 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
 );
 
 const StyledSelect = styled.select`
-  padding: 1.5rem 1rem;
+  padding: 1rem 1rem;
+
+  font-family: Poppins, sand-serif;
+  font-size: 1.4rem;
 
   border-radius: 2px;
   border: none;
@@ -23,13 +26,6 @@ const StyledSelect = styled.select`
 
   &:focus {
     outline: none;
-  }
-
-  &::placeholder {
-    font-family: Poppins, sand-serif;
-    font-size: 1.4rem;
-
-    color: rgba(0, 0, 0, 0.4);
   }
 `;
 
