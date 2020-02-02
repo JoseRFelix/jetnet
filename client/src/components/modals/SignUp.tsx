@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 
 import { ReactComponent as CloseSVG } from "assets/svg/close.svg";
 import { regex } from "../../constants";
+import { useDispatch } from "react-redux";
+import { signUp } from "slices/auth";
 
 const stepsTitles = ["Hello, Friend!", "Tell us about yourself", "Finally..."];
 
@@ -13,7 +15,7 @@ const initialFormData = {
   fullName: "",
   email: "",
   password: "",
-  userImage: "",
+  picture: "",
   phone: "",
   address: {
     street: "",
@@ -22,7 +24,7 @@ const initialFormData = {
     state: "",
     country: ""
   },
-  birthday: "",
+  birthday: new Date(),
   securityQuestions: [
     { question: "", answer: "" },
     { question: "", answer: "" },
@@ -33,14 +35,12 @@ const initialFormData = {
 interface StepContext {
   currentStep: number;
   _next: Function;
-  formData: typeof initialFormData;
   submitRegister: Function;
 }
 
 const initialContext = {
   currentStep: 1,
   _next: () => null,
-  formData: initialFormData,
   submitRegister: () => null
 };
 
@@ -49,9 +49,10 @@ const StepContext = React.createContext<StepContext>(initialContext);
 export const SignUp: React.FC = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [currentStep, setCurrentStep] = useState(1);
+  const dispatch = useDispatch();
 
   const submitRegister = (data: typeof initialFormData) => {
-    console.log(data);
+    dispatch(signUp(data));
   };
 
   const _next = (data: Partial<typeof initialFormData>) => {
@@ -69,7 +70,6 @@ export const SignUp: React.FC = () => {
   const contextValues = {
     currentStep,
     _next,
-    formData,
     submitRegister
   };
 
@@ -136,7 +136,7 @@ const StyledButton = styled(Button)`
 `;
 
 const Step1: React.FC = () => {
-  const { currentStep, _next, formData } = useContext(StepContext);
+  const { currentStep, _next } = useContext(StepContext);
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = ({ day, month, year, ...rest }: Record<string, any>) => {
@@ -156,7 +156,7 @@ const Step1: React.FC = () => {
           name="fullName"
           placeholder="Full name"
         />
-        {errors.email && <ErrorMessage>This field is required</ErrorMessage>}
+        {errors.fullName && <ErrorMessage>This field is required</ErrorMessage>}
       </FormItem>
 
       <FormItem>
@@ -174,6 +174,7 @@ const Step1: React.FC = () => {
       <FormItem>
         <StyledInput
           ref={register({ required: true })}
+          type="password"
           name="password"
           placeholder="Password"
         />
@@ -321,7 +322,7 @@ const Step2: React.FC = () => {
     country,
     ...rest
   }: Record<string, any>) => {
-    _next({ address: { street, city, zip, state, country, ...rest } });
+    _next({ address: { street, city, zip, state, country }, ...rest });
   };
 
   if (currentStep !== 2) {
@@ -357,7 +358,7 @@ const Step2: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="state"
-          placeholder="State"
+          placeholder="State / Province / Region"
         />
         {errors.state && <ErrorMessage>This field is required</ErrorMessage>}
       </FormItem>
@@ -457,14 +458,22 @@ const Step3: React.FC = () => {
   const { register, handleSubmit, errors } = useForm();
   const [userImage, setUserImage] = useState<string | null>(null);
 
-  const onSubmit = (data: Record<string, any>) => {
+  const onSubmit = ({
+    question1,
+    question1Answer,
+    question2,
+    question2Answer,
+    question3,
+    question3Answer,
+    ...rest
+  }: Record<string, any>) => {
     const securityQuestions = [
-      { question: data.question1, answer: data.question1Answer },
-      { question: data.question2, answer: data.question2Answer },
-      { question: data.question3, answer: data.question3Answer }
+      { question: question1, answer: question1Answer },
+      { question: question2, answer: question2Answer },
+      { question: question3, answer: question3Answer }
     ];
 
-    _next({ ...data, userImage, securityQuestions });
+    _next({ ...rest, picture: userImage, securityQuestions });
   };
 
   if (currentStep !== 3) {

@@ -1,4 +1,4 @@
-interface IAddress {
+export interface IAddress {
   street: string;
   city: string;
   zip: string;
@@ -6,9 +6,25 @@ interface IAddress {
   country: string;
 }
 
-interface ISecurityQuestion {
+export interface ISecurityQuestion {
   question: string;
   answer: string;
+}
+
+export interface IUserSignUpDTO {
+  fullName: string;
+  email: string;
+  password: string;
+  birthday: Date;
+  phone: string;
+  picture: string | null;
+  address: IAddress;
+  securityQuestions: ISecurityQuestion[];
+}
+
+export interface IUserSignInDTO {
+  email: string;
+  password: string;
 }
 
 export interface IUser {
@@ -19,18 +35,7 @@ export interface IUser {
   phone: string;
   password: string;
   salt: string;
-  picture?: string;
-  address: IAddress;
-  securityQuestions: ISecurityQuestion[];
-}
-
-export interface IUserInputDTO {
-  fullName: string;
-  email: string;
-  password: string;
-  birthday: Date;
-  phone: string;
-  picture?: string;
+  picture: string | null;
   address: IAddress;
   securityQuestions: ISecurityQuestion[];
 }

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const User = new mongoose.Schema(
   {
-    name: {
+    fullName: {
       type: String,
       required: [true, 'Please enter a full name'],
       index: true,
@@ -16,7 +16,7 @@ const User = new mongoose.Schema(
       index: true,
     },
 
-    dateOfBirth: {
+    birthday: {
       type: Date,
       required: true,
     },
@@ -27,11 +27,19 @@ const User = new mongoose.Schema(
     },
 
     address: {
-      city: { type: String, required: true },
       street: { type: String, required: true },
-      number: { type: String, required: true },
-      zip: { type: String, required: true },
+      city: { type: String, required: true },
+      zip: { type: Number, required: true },
+      state: { type: String, required: true },
+      country: { type: String, required: true },
     },
+
+    securityQuestions: [
+      {
+        question: { type: String, required: true },
+        answer: { type: String, required: true },
+      },
+    ],
 
     picture: String,
 

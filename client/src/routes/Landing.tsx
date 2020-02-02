@@ -8,10 +8,19 @@ import { ReactComponent as RedTriangleCircleSVG } from "assets/svg/red-tri-circl
 import { ReactComponent as ThumbsUpSVG } from "assets/svg/thumbs-up.svg";
 import { ReactComponent as ServerWomanSVG } from "assets/svg/server-woman-colour.svg";
 import { ReactComponent as DrawingManSVG } from "assets/svg/drawing-man-colour.svg";
+import { useDispatch } from "react-redux";
+import { showModal } from "slices/modal";
+import { modalTypes } from "../constants";
 
 interface Props {}
 
 const Landing: React.FC<Props> = () => {
+  const dispatch = useDispatch();
+
+  const openSignUp = () => {
+    dispatch(showModal({ modalType: modalTypes.signUp, modalProps: {} }));
+  };
+
   return (
     <Wrapper>
       <Navbar />
@@ -26,7 +35,7 @@ const Landing: React.FC<Props> = () => {
             Find friends at jet speed with Our world-class social network
           </HeroSubHeader>
           <span>
-            <Button>Get Started</Button>
+            <Button onClick={openSignUp}>Get Started</Button>
           </span>
           <HeroAquaTriangleCircleSquare />
           <HeroCremeTriangle />
@@ -67,7 +76,7 @@ const Landing: React.FC<Props> = () => {
         <CallToActionBox>
           <CallToActionHeader>Try It For Free</CallToActionHeader>
           <span>
-            <Button>Get Started</Button>
+            <Button onClick={openSignUp}>Get Started</Button>
           </span>
           <CTACremeTriangle />
           <CTARedTriangleCircle />

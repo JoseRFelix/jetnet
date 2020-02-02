@@ -14,6 +14,7 @@ export const Modal: React.FC<Props> = ({ children }) => {
   return (
     <StyledModal
       bodyOpenClassName={null}
+      ariaHideApp={false}
       style={{
         overlay: {
           backgroundColor: "rgba(0, 0, 0, 0.3)",

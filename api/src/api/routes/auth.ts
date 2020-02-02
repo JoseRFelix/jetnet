@@ -15,9 +15,27 @@ export default (app: Router) => {
     '/signup',
     celebrate({
       body: Joi.object({
-        name: Joi.string().required(),
+        fullName: Joi.string().required(),
         email: Joi.string().required(),
         password: Joi.string().required(),
+        birthday: Joi.date().required(),
+        phone: Joi.string().required(),
+        picture: Joi.string().allow(null),
+        securityQuestions: Joi.array()
+          .items(
+            Joi.object().keys({
+              question: Joi.string().required(),
+              answer: Joi.string().required(),
+            }),
+          )
+          .required(),
+        address: Joi.object().keys({
+          street: Joi.string().required(),
+          city: Joi.string().required(),
+          zip: Joi.string().required(),
+          state: Joi.string().required(),
+          country: Joi.string().required(),
+        }),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {

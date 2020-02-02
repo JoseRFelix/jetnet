@@ -1,19 +1,25 @@
 import React from "react";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { defaultTheme, breakpoints } from "theme";
-import { BrowserRouter } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Router } from "routes";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "helpers";
 
-const App: React.FC = () => {
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
+import "react-toastify/dist/ReactToastify.min.css";
+toast.configure();
+
+const App: React.FC = () => (
+  <ThemeProvider theme={defaultTheme}>
+    {
+      // @ts-ignore
+      <ConnectedRouter history={history}>
         <GlobalStyle />
         <Router />
-      </BrowserRouter>
-    </ThemeProvider>
-  );
-};
+      </ConnectedRouter>
+    }
+  </ThemeProvider>
+);
 
 const GlobalStyle = createGlobalStyle`
   * {
