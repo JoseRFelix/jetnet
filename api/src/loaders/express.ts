@@ -20,7 +20,7 @@ export default ({ app }: { app: express.Application }) => {
 
   app.use(require('method-override')());
 
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({ limit: '5mb' }));
 
   app.use(config.api.prefix, routes());
 
