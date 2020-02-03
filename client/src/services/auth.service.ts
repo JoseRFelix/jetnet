@@ -2,10 +2,21 @@ import { API } from "helpers";
 import { AxiosRequestConfig } from "axios";
 import { IUserSignUpDTO, IUserSignInDTO, IUser } from "interfaces";
 
-export interface IUserResult {
+export interface IResult {
   user: IUser;
   token: string;
 }
+
+const isAvailable = async (email: string) => {
+  const params: AxiosRequestConfig = {
+    url: "/auth/available",
+    method: "post",
+    data: { email }
+  };
+
+  const { data } = await API.request<{ isAvailable: boolean }>(params);
+  return data;
+};
 
 const signUp = async (input: IUserSignUpDTO) => {
   const params: AxiosRequestConfig = {
@@ -14,7 +25,7 @@ const signUp = async (input: IUserSignUpDTO) => {
     data: input
   };
 
-  const { data } = await API.request<IUserResult>(params);
+  const { data } = await API.request<IResult>(params);
   return data;
 };
 
@@ -25,8 +36,8 @@ const signIn = async (input: IUserSignInDTO) => {
     data: input
   };
 
-  const { data } = await API.request<IUserResult>(params);
+  const { data } = await API.request<IResult>(params);
   return data;
 };
 
-export const authService = { signUp, signIn };
+export const authService = { signUp, signIn, isAvailable };

@@ -1,20 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { lighten } from "polished";
+import { Spinner } from "components";
 
 interface Props extends React.ComponentPropsWithoutRef<"button"> {
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  loading?: boolean;
 }
 
 const Button: React.FC<Props> = ({
   className,
   onClick,
   children,
+  loading,
   ...props
 }) => (
-  <StyledButton className={className} onClick={onClick} {...props}>
-    {children}
+  <StyledButton disabled={loading} className={className} onClick={onClick} {...props}>
+    {loading ? <Spinner /> : children}
   </StyledButton>
 );
 

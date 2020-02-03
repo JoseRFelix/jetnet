@@ -6,8 +6,11 @@ import { useForm } from "react-hook-form";
 
 import { ReactComponent as CloseSVG } from "assets/svg/close.svg";
 import { regex } from "../../constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "slices/auth";
+import { RootState } from "slices";
+import { authService } from "services";
+import { toast } from "react-toastify";
 
 const stepsTitles = ["Hello, Friend!", "Tell us about yourself", "Finally..."];
 
@@ -125,11 +128,22 @@ const ErrorMessage = styled.span`
   margin-top: 0.5rem;
 `;
 
-const StepTrigger = ({ currentStep }: { currentStep: number }) => (
-  <StyledButton type="submit">
-    {currentStep === 3 ? "Create account" : "Next"}
-  </StyledButton>
-);
+const StepTrigger = ({
+  currentStep,
+  forceLoad
+}: {
+  currentStep: number;
+  forceLoad?: boolean;
+}) => {
+  const loading =
+    useSelector((state: RootState) => state.auth.isLoading) || forceLoad;
+
+  return (
+    <StyledButton loading={loading} type="submit">
+      {currentStep === 3 ? "Create account" : "Next"}
+    </StyledButton>
+  );
+};
 
 const StyledButton = styled(Button)`
   border-radius: 3px;
@@ -137,12 +151,25 @@ const StyledButton = styled(Button)`
 
 const Step1: React.FC = () => {
   const { currentStep, _next } = useContext(StepContext);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, setError } = useForm();
 
-  const onSubmit = ({ day, month, year, ...rest }: Record<string, any>) => {
-    const birthday = new Date(`${month}/${day}/${year}`);
+  const onSubmit = async ({
+    email,
+    day,
+    month,
+    year,
+    ...rest
+  }: Record<string, any>) => {
+    const { isAvailable } = await authService.isAvailable(email);
 
-    _next({ birthday, ...rest });
+    if (!isAvailable) {
+      toast.error("The Email is already registered.");
+      setError("email", "unavailable", "Please choose a different email");
+    } else {
+      const birthday = new Date(`${month}/${day}/${year}`);
+
+      _next({ birthday, email, ...rest });
+    }
   };
 
   if (currentStep !== 1) {
@@ -154,7 +181,7 @@ const Step1: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="fullName"
-          placeholder="Full name"
+          placeholder="Full name*"
         />
         {errors.fullName && <ErrorMessage>This field is required</ErrorMessage>}
       </FormItem>
@@ -162,13 +189,15 @@ const Step1: React.FC = () => {
       <FormItem>
         <StyledInput
           ref={register({
-            required: true,
+            required: "This field is required",
             pattern: regex.email
           })}
           name="email"
-          placeholder="Email"
+          placeholder="Email*"
         />
-        {errors.email && <ErrorMessage>This field is required</ErrorMessage>}
+        {errors.email && (
+          <ErrorMessage>{(errors.email as any).message}</ErrorMessage>
+        )}
       </FormItem>
 
       <FormItem>
@@ -176,7 +205,7 @@ const Step1: React.FC = () => {
           ref={register({ required: true })}
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="Password*"
         />
         {errors.password && <ErrorMessage>This field is required</ErrorMessage>}
       </FormItem>
@@ -257,7 +286,7 @@ const Step1: React.FC = () => {
                 }
               })}
               name="year"
-              placeholder="Year"
+              placeholder="Year*"
             />
           </FormItem>
         </BirthdayInputBox>
@@ -334,7 +363,7 @@ const Step2: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="country"
-          placeholder="Country"
+          placeholder="Country*"
         />
         {errors.country && <ErrorMessage>This field is required</ErrorMessage>}
       </FormItem>
@@ -342,7 +371,7 @@ const Step2: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="street"
-          placeholder="Street"
+          placeholder="Street*"
         />
         {errors.street && <ErrorMessage>This field is required</ErrorMessage>}
       </FormItem>
@@ -350,7 +379,7 @@ const Step2: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="city"
-          placeholder="City"
+          placeholder="City*"
         />
         {errors.city && <ErrorMessage>This field is required</ErrorMessage>}
       </FormItem>
@@ -358,7 +387,7 @@ const Step2: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="state"
-          placeholder="State / Province / Region"
+          placeholder="State / Province / Region*"
         />
         {errors.state && <ErrorMessage>This field is required</ErrorMessage>}
       </FormItem>
@@ -373,15 +402,10 @@ const Step2: React.FC = () => {
           })}
           type="number"
           name="zip"
-          placeholder="Zip code"
+          placeholder="Zip code*"
         />
         {errors.zip && (
-          <ErrorMessage>
-            {
-              // @ts-ignore
-              errors.zip.message
-            }
-          </ErrorMessage>
+          <ErrorMessage>{(errors.zip as any).message}</ErrorMessage>
         )}
       </FormItem>
       <FormItem>
@@ -505,7 +529,7 @@ const Step3: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="question1Answer"
-          placeholder="Answer"
+          placeholder="Answer*"
         />
         {errors.question1Answer && (
           <ErrorMessage>This field is required</ErrorMessage>
@@ -526,7 +550,7 @@ const Step3: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="question2Answer"
-          placeholder="Answer"
+          placeholder="Answer*"
         />
         {errors.question2Answer && (
           <ErrorMessage>This field is required</ErrorMessage>
@@ -547,7 +571,7 @@ const Step3: React.FC = () => {
         <StyledInput
           ref={register({ required: true })}
           name="question3Answer"
-          placeholder="Answer"
+          placeholder="Answer*"
         />
         {errors.question3Answer && (
           <ErrorMessage>This field is required</ErrorMessage>

@@ -5,6 +5,18 @@ declare global {
     export interface Request {
       currentUser: IUser & Document;
     }
+
+    export interface CloudinaryResult {
+      public_id: string;
+      version: number;
+      signature: string;
+      width: number;
+      height: number;
+      format: string;
+      resource_type: string;
+      url: string;
+      secure_url: string;
+    }
   }
 
   namespace Models {

@@ -75,15 +75,25 @@ export default (app: Router) => {
     },
   );
 
-  route.post('/logout', middlewares.isAuth, (req: Request, res: Response, next: NextFunction) => {
-    const logger = Container.get<Logger>('logger');
-    logger.debug('Calling Sign-Out endpoint with body: %o', req.body);
-    try {
-      //@TODO AuthService.Logout(req.user) do some clever stuff
-      return res.status(200).end();
-    } catch (e) {
-      logger.error('🔥 error %o', e);
-      return next(e);
-    }
-  });
+  route.post(
+    '/available',
+    celebrate({
+      body: Joi.object({
+        email: Joi.string().required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger = Container.get<Logger>('logger');
+      logger.debug('Calling Availability endpoint with body: %o', req.body);
+      try {
+        const { email } = req.body;
+        const authServiceInstance = Container.get(AuthService);
+        const isAvailable = await authServiceInstance.isAvailable(email);
+        return res.json({ isAvailable }).status(200);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
 };

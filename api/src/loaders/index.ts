@@ -12,7 +12,7 @@ export default async ({ expressApp }) => {
     model: require('../models/user').default,
   };
 
-  const { agenda } = await dependencyInjectorLoader({
+  await dependencyInjectorLoader({
     mongoConnection,
     models: [userModel],
   });

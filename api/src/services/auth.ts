@@ -4,6 +4,7 @@ import config from '../config';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
 import { IUser, IUserInputDTO } from '../interfaces/IUser';
+import cloudinary from '../loaders/cloudinary';
 
 @Service()
 export default class AuthService {
@@ -11,6 +12,18 @@ export default class AuthService {
 
   public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser; token: string }> {
     try {
+      if (userInputDTO.picture) {
+        const result: Express.CloudinaryResult = await cloudinary.uploader.upload(userInputDTO.picture, {
+          width: 500,
+          height: 500,
+          crop: 'pad',
+        });
+
+        if (!result) throw new Error("Couldn't upload image to Cloudinary");
+
+        userInputDTO.picture = result.secure_url;
+      }
+
       const salt = randomBytes(32);
 
       this.logger.silly('Hashing password');
@@ -27,7 +40,6 @@ export default class AuthService {
       if (!userRecord) {
         throw new Error('User cannot be created');
       }
-      this.logger.silly('Sending welcome email');
 
       const user = userRecord.toObject();
       Reflect.deleteProperty(user, 'password');
@@ -60,6 +72,15 @@ export default class AuthService {
     } else {
       throw new Error('Invalid Password');
     }
+  }
+
+  public async isAvailable(email: string): Promise<boolean> {
+    const userRecord = await this.userModel.findOne({ email });
+    if (!userRecord) {
+      return true;
+    }
+
+    return false;
   }
 
   private generateToken(user) {
