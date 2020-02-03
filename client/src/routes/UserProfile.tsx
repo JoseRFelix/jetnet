@@ -4,6 +4,7 @@ import { RootState } from "slices";
 import styled from "styled-components";
 import { Navbar, Footer, Button } from "components";
 import { useHistory } from "react-router-dom";
+import { breakpoints } from "theme";
 
 import { ReactComponent as PersonSVG } from "assets/svg/person.svg";
 import { routes } from "../constants";
@@ -79,7 +80,7 @@ const UserProfile: React.FC<Props> = () => {
             </AboutRow>
 
             <Questions>
-              <AboutRowName>Security Questions:</AboutRowName>
+              <SecurityRowName>Security Questions:</SecurityRowName>
               <ol>
                 {user?.securityQuestions?.map(({ question, answer }) => (
                   <Question key={question}>
@@ -108,6 +109,11 @@ const UserProfileBox = styled.div`
 
   flex-wrap: wrap;
 
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    flex-direction: column;
+    align-items: center;
+  }
+
   padding: 4rem;
 `;
 
@@ -120,6 +126,10 @@ const LeftSection = styled.div`
 
   & > *:not(:last-child) {
     margin-bottom: 2rem;
+  }
+
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    margin: 0;
   }
 `;
 
@@ -148,6 +158,11 @@ const InformationBox = styled.div`
 const UserFullName = styled.h1`
   font-weight: 500;
   font-size: 6rem;
+
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    margin-top: 2rem;
+    text-align: center;
+  }
 `;
 
 const TabBar = styled.div`
@@ -187,6 +202,10 @@ const AboutBox = styled.div`
   display: flex;
   flex-direction: column;
 
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    align-items: center;
+  }
+
   & > *:not(:last-child) {
     margin-bottom: 3rem;
   }
@@ -201,6 +220,10 @@ const AboutTitle = styled.h2`
 
 const AboutRow = styled.div`
   display: flex;
+
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    flex-direction: column;
+  }
 
   p {
     width: 25rem;
@@ -217,8 +240,18 @@ const AboutRowName = styled.h3`
 const Questions = styled.div`
   display: flex;
 
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    flex-direction: column;
+    align-items: center;
+  }
+
   h3 {
     margin-right: 2rem;
+
+    @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+      margin-bottom: 2rem;
+      margin-right: 0;
+    }
   }
 
   ol {
@@ -226,8 +259,24 @@ const Questions = styled.div`
   }
 `;
 
+const SecurityRowName = styled.h3`
+  font-weight: 600;
+  margin-right: 1.5rem;
+
+  width: 9rem;
+
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    width: 100%;
+    text-align: center;
+  }
+`;
+
 const Question = styled.li`
   font-weight: 600;
+
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    text-align: center;
+  }
 
   p {
     padding: 0.4rem 0;

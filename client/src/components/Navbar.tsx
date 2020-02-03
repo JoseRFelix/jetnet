@@ -8,6 +8,7 @@ import { logout } from "slices/auth";
 import { clearUser } from "slices/user";
 import { useHistory } from "react-router-dom";
 import { RootState } from "slices";
+import { breakpoints } from "theme";
 
 interface Props {
   isLoggedIn?: boolean;
@@ -86,6 +87,10 @@ const LinksBox = styled.div`
   display: flex;
   align-items: center;
 
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    display: none;
+  }
+
   & > *:not(:last-child) {
     margin-right: 4rem;
   }
@@ -97,6 +102,10 @@ const Link = styled.span`
 
   &:hover {
     color: rgba(0, 0, 0, 0.8);
+  }
+
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    display: none;
   }
 `;
 

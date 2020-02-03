@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { routes } from "../constants";
+import { breakpoints } from "theme";
 
 const Footer: React.FC = () => {
   const { push } = useHistory();
@@ -42,9 +43,19 @@ const Wrapper = styled.footer`
 
   padding: 6rem 0 4rem 0;
 
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    flex-direction: column;
+    align-items: center;
+  }
+
   & > div:first-child {
     display: flex;
     flex-direction: column;
+
+    @media only screen and (max-width: ${breakpoints.bpMedium}) {
+      margin-bottom: 4rem;
+      align-items: center;
+    }
 
     & > *:not(:last-child) {
       margin-bottom: 1rem;
@@ -68,8 +79,25 @@ const FooterLinks = styled.div`
   display: flex;
   justify-content: space-evenly;
 
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    flex-direction: column;
+  }
+
   & > *:not(:last-child) {
     margin-right: 15rem;
+
+    @media only screen and (max-width: ${breakpoints.bpLargeMedium}) {
+      margin-right: 8rem;
+    }
+
+    @media only screen and (max-width: ${breakpoints.bpMedium}) {
+      margin-right: 4rem;
+    }
+
+    @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+      margin-right: 0;
+      margin-bottom: 4rem;
+    }
   }
 `;
 

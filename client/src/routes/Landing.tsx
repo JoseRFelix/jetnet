@@ -11,6 +11,7 @@ import { ReactComponent as DrawingManSVG } from "assets/svg/drawing-man-colour.s
 import { useDispatch } from "react-redux";
 import { showModal } from "slices/modal";
 import { modalTypes } from "../constants";
+import { breakpoints } from "theme";
 
 interface Props {}
 
@@ -96,8 +97,13 @@ const Hero = styled.header`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap-reverse;
 
   padding: 8rem 5rem 0 5rem;
+
+  @media only screen and (max-width: ${breakpoints.bpLargeMedium}) {
+    padding: 12rem 5rem 0 5rem;
+  }
 `;
 
 const HeroLeft = styled.div`
@@ -105,6 +111,16 @@ const HeroLeft = styled.div`
   flex-direction: column;
 
   position: relative;
+
+  @media only screen and (max-width: ${breakpoints.bpLargeMedium}) {
+    padding-top: 2rem;
+    margin-left: 10rem;
+  }
+
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    margin: 0;
+    align-items: center;
+  }
 
   & > *:not(:last-child) {
     margin-bottom: 5rem;
@@ -116,6 +132,15 @@ const HeroHeader = styled.h1`
   font-size: 15rem;
 
   line-height: 16rem;
+
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    text-align: center;
+    font-size: 13rem;
+  }
+
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    font-size: 10rem;
+  }
 `;
 
 const HeroSubHeader = styled.h1`
@@ -138,6 +163,11 @@ const HeroRedTriangleCircle = styled(RedTriangleCircleSVG)`
   position: absolute;
   top: -60px;
   left: -40px;
+
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    top: 20px;
+    left: 10%;
+  }
 `;
 
 const HeroCremeTriangle = styled(CremeTriangleSVG)`
@@ -166,11 +196,18 @@ const FeaturesSubHeader = styled.h4`
 const FeaturesHeader = styled.h1`
   font-weight: 400;
   font-size: 6rem;
+
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    text-align: center;
+  }
 `;
 
 const FeaturesBox = styled.div`
   display: flex;
   justify-content: space-around;
+
+  flex-wrap: wrap-reverse;
+
   width: 100%;
 
   padding: 10rem 5rem 0 5rem;
@@ -212,6 +249,10 @@ const CallToAction = styled.section`
   display: flex;
   align-items: center;
 
+  @media only screen and (max-width: ${breakpoints.bpLargeMedium}) {
+    flex-wrap: wrap;
+  }
+
   padding-top: 10rem;
 
   position: relative;
@@ -240,6 +281,10 @@ const CallToAction = styled.section`
 const DrawingMan = styled(DrawingManSVG)`
   width: 80rem;
   margin-top: -10rem;
+
+  @media only screen and (max-width: ${breakpoints.bpMedium}) {
+    display: none;
+  }
 `;
 
 const CallToActionBox = styled.div`
@@ -256,6 +301,10 @@ const CallToActionBox = styled.div`
   & > *:not(:last-child) {
     margin-bottom: 2rem;
   }
+
+  @media only screen and (max-width: ${breakpoints.bpLargeMedium}) {
+    padding: 2rem;
+  }
 `;
 
 const CallToActionHeader = styled.h1`
@@ -267,12 +316,30 @@ const CTACremeTriangle = styled(CremeTriangleSVG)`
   position: absolute;
   top: -80px;
   right: 20%;
+
+  @media only screen and (max-width: ${breakpoints.bpLargeMedium}) {
+    top: -20px;
+    right: 30%;
+  }
+
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    right: 10%;
+  }
 `;
 
 const CTARedTriangleCircle = styled(RedTriangleCircleSVG)`
   position: absolute;
   bottom: -80px;
   left: 20%;
+
+  @media only screen and (max-width: ${breakpoints.bpLargeMedium}) {
+    bottom: -5px;
+    left: 30%;
+  }
+
+  @media only screen and (max-width: ${breakpoints.bpMobileL}) {
+    left: 10%;
+  }
 `;
 
 export default Landing;
