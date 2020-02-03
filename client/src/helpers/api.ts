@@ -2,7 +2,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const BASE_URL =
-  process.env.NODE_ENV === "development" ? "http://localhost:3001/api" : "";
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3001/api"
+    : "https://jetnet-api.herokuapp.com/";
 
 export const API = axios.create({
   baseURL: BASE_URL,
