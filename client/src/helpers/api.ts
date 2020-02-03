@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const BASE_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3001/api"
-    : "https://jetnet-api.herokuapp.com/";
+    : "https://jetnet-api.herokuapp.com/api";
 
 export const API = axios.create({
   baseURL: BASE_URL,
