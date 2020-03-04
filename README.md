@@ -3,7 +3,7 @@
   <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> Take home challenge for JetCake
+> Concept social media start-up website
 
 ## Install
 
